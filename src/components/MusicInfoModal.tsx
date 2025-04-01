@@ -1,37 +1,25 @@
-
 import React, { useState, useEffect } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Volume2, VolumeX } from 'lucide-react';
-
 interface MusicInfoModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onStartMusic: () => void;
   onMuteMusic: () => void;
 }
-
-const MusicInfoModal = ({ 
-  open, 
-  onOpenChange, 
+const MusicInfoModal = ({
+  open,
+  onOpenChange,
   onStartMusic,
-  onMuteMusic 
+  onMuteMusic
 }: MusicInfoModalProps) => {
   const [hasInteracted, setHasInteracted] = useState(false);
-
   const handleStartMusic = () => {
     onStartMusic();
     setHasInteracted(true);
     onOpenChange(false);
   };
-
   const handleMuteMusic = () => {
     onMuteMusic();
     setHasInteracted(true);
@@ -45,17 +33,14 @@ const MusicInfoModal = ({
         onMuteMusic();
         onOpenChange(false);
       }, 10000);
-      
       return () => clearTimeout(timer);
     }
   }, [open, hasInteracted, onOpenChange, onMuteMusic]);
-
-  return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+  return <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="glass-card border-0 max-w-md">
         <DialogHeader>
           <DialogTitle className="text-2xl font-display text-bahamas-blue">Welcome to the Bahamas!</DialogTitle>
-          <DialogDescription className="text-lg text-slate-700">
+          <DialogDescription className="text-lg text-slate-200">
             This site features traditional Bahamian music to enhance your experience.
           </DialogDescription>
         </DialogHeader>
@@ -68,26 +53,17 @@ const MusicInfoModal = ({
         </div>
         
         <DialogFooter className="flex sm:justify-center gap-3 flex-row">
-          <Button 
-            className="bg-bahamas-blue hover:bg-bahamas-blue/80 text-white"
-            onClick={handleStartMusic}
-          >
+          <Button className="bg-bahamas-blue hover:bg-bahamas-blue/80 text-white" onClick={handleStartMusic}>
             <Volume2 className="w-4 h-4 mr-2" />
             Play Music
           </Button>
           
-          <Button 
-            variant="outline"
-            className="border-bahamas-blue text-bahamas-blue hover:bg-bahamas-blue/10"
-            onClick={handleMuteMusic}
-          >
+          <Button variant="outline" className="border-bahamas-blue text-bahamas-blue hover:bg-bahamas-blue/10" onClick={handleMuteMusic}>
             <VolumeX className="w-4 h-4 mr-2" />
             No Thanks
           </Button>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
-
 export default MusicInfoModal;
